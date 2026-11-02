@@ -1,0 +1,6 @@
+name_prefix = "demo"
+location = "germanywestcentral"
+
+tags = {
+  Owner = "your-name"
+}
