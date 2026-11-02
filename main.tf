@@ -4,7 +4,7 @@ locals {
       Project     = var.name_prefix
       Environment = "demo"
       ManagedBy   = "opentofu"
-      Repository  = "azure-postgres"
+      Repository  = "tf-azure-postgres"
     },
     var.tags,
   )
