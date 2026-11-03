@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 1.11.0" # ephemeral resources and write-only arguments
+  required_version = ">= 1.12.0" # ephemeral resources and write-only arguments; 1.11 fails on them in tofu test
 
   required_providers {
     azurerm = {

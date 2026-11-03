@@ -4,7 +4,7 @@ A PostgreSQL Flexible Server with private VNet access.
 
 OpenTofu demo template. Standalone, no dependency on other repos. Compatible with Terraform.
 
-Needs **OpenTofu 1.11 or later**, because the admin password uses an ephemeral resource and write-only arguments.
+Needs **OpenTofu 1.12 or later**, because the admin password uses an ephemeral resource and write-only arguments. OpenTofu 1.11 supports them too, but fails on them in the mocked unit tests.
 
 ## Architecture
 
