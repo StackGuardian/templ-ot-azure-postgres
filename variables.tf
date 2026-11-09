@@ -15,71 +15,35 @@ variable "location" {
   default     = "germanywestcentral"
 }
 
-variable "tags" {
-  description = "Additional tags for all resources"
-  type        = map(string)
-  default     = {}
-}
-
-variable "vnet_cidr" {
-  description = "Address space of the VNet"
-  type        = string
-  default     = "10.0.0.0/16"
+# Grouped so the StackGuardian form can show them in one "Advanced Settings" section.
+variable "advanced_settings" {
+  description = "Settings most deployments keep at their defaults"
+  type = object({
+    vnet_cidr             = optional(string, "10.0.0.0/16")     # Address space of the VNet
+    postgres_version      = optional(string, "18")              # PostgreSQL major version
+    sku_name              = optional(string, "B_Standard_B1ms") # SKU of the flexible server
+    storage_mb            = optional(number, 32768)             # Storage in MB
+    administrator_login   = optional(string, "pgadmin")         # Admin user name. The password is generated and stored in Key Vault.
+    password_version      = optional(number, 1)                 # Increase to generate and set a new admin password
+    backup_retention_days = optional(number, 7)                 # Days to keep automated backups (7-35)
+    log_retention_days    = optional(number, 90)                # Retention of the logs in Log Analytics
+    tags                  = optional(map(string), {})           # Additional tags for all resources
+  })
+  default  = {}
+  nullable = false
 
   validation {
-    condition     = can(cidrnetmask(var.vnet_cidr))
-    error_message = "Must be a valid IPv4 CIDR block."
+    condition     = can(cidrnetmask(var.advanced_settings.vnet_cidr))
+    error_message = "vnet_cidr must be a valid IPv4 CIDR block."
   }
-}
-
-variable "postgres_version" {
-  description = "PostgreSQL major version"
-  type        = string
-  default     = "17"
-}
-
-variable "sku_name" {
-  description = "SKU of the flexible server"
-  type        = string
-  default     = "B_Standard_B1ms"
-}
-
-variable "storage_mb" {
-  description = "Storage in MB"
-  type        = number
-  default     = 32768
-}
-
-variable "administrator_login" {
-  description = "Admin user name. The password is generated and stored in Key Vault."
-  type        = string
-  default     = "pgadmin"
-}
-
-variable "password_version" {
-  description = "Increase to generate and set a new admin password"
-  type        = number
-  default     = 1
-}
-
-variable "backup_retention_days" {
-  description = "Days to keep automated backups (7-35)"
-  type        = number
-  default     = 7
 
   validation {
-    condition     = var.backup_retention_days >= 7 && var.backup_retention_days <= 35
+    condition     = var.advanced_settings.backup_retention_days >= 7 && var.advanced_settings.backup_retention_days <= 35
     error_message = "Backup retention must be between 7 and 35 days."
   }
-}
-
-variable "log_retention_days" {
-  description = "Retention of the logs in Log Analytics"
-  type        = number
-  default     = 90
 
   validation {
-    condition     = var.log_retention_days >= 30 && var.log_retention_days <= 730
+    condition     = var.advanced_settings.log_retention_days >= 30 && var.advanced_settings.log_retention_days <= 730
     error_message = "Log Analytics retention must be between 30 and 730 days."
   }
 }

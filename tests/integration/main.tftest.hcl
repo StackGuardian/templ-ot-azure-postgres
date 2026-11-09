@@ -5,8 +5,10 @@
 
 variables {
   name_prefix = "itest"
-  tags = {
-    Purpose = "integration-test"
+  advanced_settings = {
+    tags = {
+      Purpose = "integration-test"
+    }
   }
 }
 

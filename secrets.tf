@@ -45,7 +45,7 @@ resource "azurerm_key_vault_secret" "admin_password" {
   name             = "postgres-admin-password"
   key_vault_id     = azurerm_key_vault.this.id
   value_wo         = ephemeral.random_password.admin.result
-  value_wo_version = var.password_version
+  value_wo_version = var.advanced_settings.password_version
   content_type     = "password"
   expiration_date  = time_offset.secret_expiry.rfc3339
   tags             = local.tags

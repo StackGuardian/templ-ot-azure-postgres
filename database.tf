@@ -4,16 +4,16 @@ resource "azurerm_postgresql_flexible_server" "this" {
   name                              = "${var.name_prefix}-pg-${random_string.suffix.result}"
   location                          = azurerm_resource_group.this.location
   resource_group_name               = azurerm_resource_group.this.name
-  version                           = var.postgres_version
-  sku_name                          = var.sku_name
-  storage_mb                        = var.storage_mb
+  version                           = var.advanced_settings.postgres_version
+  sku_name                          = var.advanced_settings.sku_name
+  storage_mb                        = var.advanced_settings.storage_mb
   delegated_subnet_id               = azurerm_subnet.db.id
   private_dns_zone_id               = azurerm_private_dns_zone.db.id
   public_network_access_enabled     = false
-  administrator_login               = var.administrator_login
+  administrator_login               = var.advanced_settings.administrator_login
   administrator_password_wo         = ephemeral.random_password.admin.result
-  administrator_password_wo_version = var.password_version
-  backup_retention_days             = var.backup_retention_days
+  administrator_password_wo_version = var.advanced_settings.password_version
+  backup_retention_days             = var.advanced_settings.backup_retention_days
   geo_redundant_backup_enabled      = false
   tags                              = local.tags
 
@@ -53,7 +53,7 @@ resource "azurerm_log_analytics_workspace" "this" {
   location            = azurerm_resource_group.this.location
   resource_group_name = azurerm_resource_group.this.name
   sku                 = "PerGB2018"
-  retention_in_days   = var.log_retention_days
+  retention_in_days   = var.advanced_settings.log_retention_days
   tags                = local.tags
 }
 

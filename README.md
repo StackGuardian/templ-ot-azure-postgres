@@ -68,7 +68,7 @@ The server is reachable only from inside the VNet, and the FQDN resolves only th
 az keyvault secret show --id "$(az keyvault show --ids <key_vault_id> --query properties.vaultUri -o tsv)secrets/postgres-admin-password" --query value -o tsv
 ```
 
-The identity that runs OpenTofu gets the role "Key Vault Secrets Officer" on the vault. To set a new password, increase `password_version` and run `tofu apply`.
+The identity that runs OpenTofu gets the role "Key Vault Secrets Officer" on the vault. To set a new password, increase `advanced_settings.password_version` and run `tofu apply`.
 
 
 ## Inputs
@@ -77,15 +77,21 @@ The identity that runs OpenTofu gets the role "Key Vault Secrets Officer" on the
 |---|---|---|
 | `name_prefix` | Prefix for all resource names | `"demo"` |
 | `location` | Azure location | `"germanywestcentral"` |
-| `tags` | Additional tags for all resources | `{}` |
+| `advanced_settings` | Object with the settings below, all optional | `{}` |
+
+`advanced_settings` attributes (shown as "Advanced Settings" in the StackGuardian form):
+
+| Name | Description | Default |
+|---|---|---|
 | `vnet_cidr` | Address space of the VNet | `"10.0.0.0/16"` |
-| `postgres_version` | PostgreSQL major version | `"17"` |
+| `postgres_version` | PostgreSQL major version | `"18"` |
 | `sku_name` | SKU of the flexible server | `"B_Standard_B1ms"` |
 | `storage_mb` | Storage in MB | `32768` |
 | `administrator_login` | Admin user | `"pgadmin"` |
 | `password_version` | Increase to set a new admin password | `1` |
 | `backup_retention_days` | Days to keep backups (7-35) | `7` |
 | `log_retention_days` | Log retention in Log Analytics | `90` |
+| `tags` | Additional tags for all resources | `{}` |
 
 ## Outputs
 

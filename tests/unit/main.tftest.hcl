@@ -100,8 +100,10 @@ run "custom_tags_are_merged" {
   command = plan
 
   variables {
-    tags = {
-      Owner = "tester"
+    advanced_settings = {
+      tags = {
+        Owner = "tester"
+      }
     }
   }
 
@@ -192,10 +194,12 @@ run "short_backup_retention_is_rejected" {
   command = plan
 
   variables {
-    backup_retention_days = 1
+    advanced_settings = {
+      backup_retention_days = 1
+    }
   }
 
-  expect_failures = [var.backup_retention_days]
+  expect_failures = [var.advanced_settings]
 }
 
 # U-10
