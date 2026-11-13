@@ -1,15 +1,55 @@
 {
+  "name_prefix": {
+    "ui:title": "Name Prefix",
+    "ui:description": "Prefix for all resource names"
+  },
+  "location": {
+    "ui:title": "Location",
+    "ui:description": "Azure location"
+  },
+  "advanced_settings": {
+    "show_advanced_settings": {
+      "ui:title": "Show advanced settings"
+    },
+    "vnet_cidr": {
+      "ui:title": "VNet CIDR"
+    },
+    "postgres_version": {
+      "ui:title": "Postgres Version"
+    },
+    "sku_name": {
+      "ui:title": "SKU"
+    },
+    "storage_mb": {
+      "ui:title": "Storage in MB"
+    },
+    "administrator_login": {
+      "ui:title": "Administrator Login"
+    },
+    "password_version": {
+      "ui:title": "Password Version"
+    },
+    "backup_retention_days": {
+      "ui:title": "Backup Retention Days"
+    },
+    "ui:order": [
+      "show_advanced_settings",
+      "vnet_cidr",
+      "postgres_version",
+      "sku_name",
+      "storage_mb",
+      "administrator_login",
+      "password_version",
+      "backup_retention_days",
+      "log_retention_days",
+      "tags"
+    ],
+    "ui:title": "Advanced Settings",
+    "ui:description": "Optional settings, most deployments keep the defaults"
+  },
   "ui:order": [
     "name_prefix",
     "location",
     "advanced_settings"
-  ],
-  "advanced_settings": {
-    "ui:title": "Advanced Settings",
-    "ui:description": "Optional settings, most deployments keep the defaults",
-    "ui:order": [
-      "show_advanced_settings",
-      "*"
-    ]
-  }
+  ]
 }

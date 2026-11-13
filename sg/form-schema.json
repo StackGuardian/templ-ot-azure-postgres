@@ -3,16 +3,12 @@
   "required": [],
   "properties": {
     "name_prefix": {
-      "title": "Name prefix",
       "type": "string",
-      "description": "Prefix for all resource names",
       "default": "demo",
       "pattern": "^[a-z][a-z0-9-]{1,15}$"
     },
     "location": {
-      "title": "Location",
       "type": "string",
-      "description": "Azure location",
       "default": "germanywestcentral",
       "enum": [
         "australiacentral",
@@ -142,7 +138,6 @@
       "properties": {
         "show_advanced_settings": {
           "type": "boolean",
-          "title": "Show advanced settings",
           "default": false
         }
       },
@@ -156,7 +151,8 @@
                     false
                   ]
                 }
-              }
+              },
+              "required": []
             },
             {
               "properties": {
@@ -512,12 +508,15 @@
                   "description": "Additional tags for all resources",
                   "default": {}
                 }
-              }
+              },
+              "required": []
             }
           ]
         }
-      }
+      },
+      "required": []
     }
   },
-  "title": "Azure PostgreSQL Database (Flexible Server)"
+  "title": "Azure PostgreSQL Database (Flexible Server)",
+  "dependencies": {}
 }
