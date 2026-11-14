@@ -219,3 +219,34 @@ run "logs_are_enabled" {
     error_message = "Connections must be logged."
   }
 }
+
+# U-11
+run "connection_throttle_is_only_set_where_supported" {
+  command = plan
+
+  variables {
+    advanced_settings = {
+      postgres_version = "16"
+    }
+  }
+
+  assert {
+    condition     = contains(keys(local.server_parameters), "connection_throttle.enable")
+    error_message = "connection_throttle.enable must be set on PostgreSQL 16."
+  }
+}
+
+# U-12
+run "connection_throttle_is_not_set_on_postgres_18" {
+  command = plan
+
+  assert {
+    condition     = !contains(keys(local.server_parameters), "connection_throttle.enable")
+    error_message = "connection_throttle.enable is not supported on PostgreSQL 18 and must not be set."
+  }
+
+  assert {
+    condition     = contains(keys(local.server_parameters), "require_secure_transport") && contains(keys(local.server_parameters), "log_connections")
+    error_message = "The hardening parameters must stay set on every version."
+  }
+}

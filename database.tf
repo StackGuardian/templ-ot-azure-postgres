@@ -32,15 +32,23 @@ resource "azurerm_postgresql_flexible_server" "this" {
   ]
 }
 
+locals {
+  # Azure does not offer connection_throttle.enable on PostgreSQL 17 and later.
+  # Setting it there fails at apply time with ParameterNotExists.
+  server_parameters = merge(
+    {
+      require_secure_transport = "on"
+      ssl_min_protocol_version = "TLSv1.2"
+      log_connections          = "on"
+      log_disconnections       = "on"
+      log_checkpoints          = "on"
+    },
+    tonumber(var.advanced_settings.postgres_version) < 17 ? { "connection_throttle.enable" = "on" } : {}
+  )
+}
+
 resource "azurerm_postgresql_flexible_server_configuration" "settings" {
-  for_each = {
-    require_secure_transport     = "on"
-    ssl_min_protocol_version     = "TLSv1.2"
-    log_connections              = "on"
-    log_disconnections           = "on"
-    log_checkpoints              = "on"
-    "connection_throttle.enable" = "on"
-  }
+  for_each = local.server_parameters
 
   server_id = azurerm_postgresql_flexible_server.this.id
   name      = each.key
