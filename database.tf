@@ -1,3 +1,4 @@
+#trivy:ignore:AVD-AZU-0021 connection_throttle.enable is set below PostgreSQL 17, Azure does not offer it on newer versions
 resource "azurerm_postgresql_flexible_server" "this" {
   #checkov:skip=CKV_AZURE_136:Geo-redundant backups are out of scope for the demo (cost)
   #checkov:skip=CKV2_AZURE_57:VNet integration is used instead of a private endpoint

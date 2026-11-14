@@ -1,3 +1,5 @@
+#trivy:ignore:AVD-AZU-0013 OpenTofu writes the secret from outside the VNet, access is controlled by RBAC
+#trivy:ignore:AVD-AZU-0016 Purge protection would block re-deploying the demo for up to 90 days
 resource "azurerm_key_vault" "this" {
   #checkov:skip=CKV_AZURE_109:OpenTofu writes the secret from outside the VNet, access is controlled by RBAC
   #checkov:skip=CKV_AZURE_189:OpenTofu writes the secret from outside the VNet, access is controlled by RBAC
@@ -41,6 +43,7 @@ ephemeral "random_password" "admin" {
   override_special = "!#%*-_=+"
 }
 
+#trivy:ignore:AVD-AZU-0017 The expiry date is set from time_offset, its value is only known at apply time
 resource "azurerm_key_vault_secret" "admin_password" {
   name             = "postgres-admin-password"
   key_vault_id     = azurerm_key_vault.this.id
