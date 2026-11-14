@@ -84,7 +84,7 @@ The identity that runs OpenTofu gets the role "Key Vault Secrets Officer" on the
 | Name | Description | Default |
 |---|---|---|
 | `vnet_cidr` | Address space of the VNet | `"10.0.0.0/16"` |
-| `postgres_version` | PostgreSQL major version | `"18"` |
+| `postgres_version` | PostgreSQL major version. `connection_throttle.enable` is only set below 17, because Azure does not offer it on newer versions | `"18"` |
 | `sku_name` | SKU of the flexible server | `"B_Standard_B1ms"` |
 | `storage_mb` | Storage in MB | `32768` |
 | `administrator_login` | Admin user | `"pgadmin"` |
@@ -120,6 +120,8 @@ tofu destroy
 The GitLab pipeline (`.gitlab-ci.yml`) lints every push. Merge requests into `development` or `main` also run
 validation, the checkov scan and the unit tests. A tag runs all of these plus the integration tests, which deploy
 real resources and destroy them again, and then creates a release. Integration tests run only when the CI/CD variables `AZURE_CLIENT_ID`, `AZURE_TENANT_ID` and `AZURE_SUBSCRIPTION_ID` are set: an app registration with a federated credential for GitLab OIDC and the audience `api://AzureADTokenExchange`.
+
+In GitLab, the `unit-tests` job also publishes its results as a JUnit test report, which you find in the **Tests** tab of the pipeline and of the merge request. The script `ci/tofu-json-to-junit.py` converts the output of `tofu test -json` to JUnit XML.
 
 The GitHub Actions workflow (`.github/workflows/ci.yml`) runs the same jobs: every push, pull requests into `development` or `main`, and tags. Set the three `AZURE_*` values as repository variables; the app registration then needs a federated credential for GitHub.
 
