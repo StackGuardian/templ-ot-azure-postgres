@@ -29,6 +29,8 @@ tofu test -test-directory=tests/integration   # needs cloud credentials
 | U-08 | Unit | Backup retention is at least 7 days | done |
 | U-09 | Unit | Backup retention below 7 days is rejected | done |
 | U-10 | Unit | Server logs and Key Vault audit logs go to Log Analytics, connections are logged | done |
+| U-11 | Unit | `connection_throttle.enable` is set on PostgreSQL 16 and earlier | done |
+| U-12 | Unit | `connection_throttle.enable` is not set on PostgreSQL 17 and later, other parameters stay | done |
 | I-01 | Integration | Server is created and has an FQDN | done |
 | I-02 | Integration | Public network access is disabled on the deployed server | done |
 | I-03 | Integration | Admin password secret exists in Key Vault (value is not read) | done |
