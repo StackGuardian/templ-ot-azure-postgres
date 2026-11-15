@@ -18,6 +18,7 @@ Use it when an application or a demo needs a secure PostgreSQL database on Azure
 - A workflow with an Azure cloud connector for the target subscription
 - The connector's identity needs rights to create resources **and** to assign roles (for example Owner, or Contributor plus User Access Administrator). It gets access to the Key Vault during the run
 - A plan for how clients reach the database: they must run inside this network
+- OpenTofu 1.12.0 or newer, if you run the module outside StackGuardian. The StackGuardian template uses 1.13.9. Older versions fail on the write-only password
 
 ## Form fields
 
